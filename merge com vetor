@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <climits> // Para INT_MIN
+using namespace std;
+
+class Stack {
+private:
+    vector<int> elements;
+
+public:
+    void push(int value) {
+        elements.push_back(value);
+    }
+
+    int pop() {
+        if (isEmpty()) {
+            cout << "Pilha vazia!" << endl;
+            return -1;
+        }
+        int data = elements.back();
+        elements.pop_back();
+        return data;
+    }
+
+    bool isEmpty() {
+        return elements.empty();
+    }
+};
+
+int main() {
+    Stack evenStack; // Pilha para números pares
+    Stack oddStack;  // Pilha para números ímpares
+
+    cout << "Digite 30 números inteiros em ordem crescente:" << endl;
+
+    int previous = INT_MIN; // Valor mínimo de int para comparar com o primeiro número digitado
+    for (int i = 0; i < 30; ++i) {
+        int num;
+        cin >> num;
+
+        if (num <= previous) {
+            cout << "O número digitado não é maior do que o anterior. Por favor, digite novamente." << endl;
+            --i; // Para digitar novamente o mesmo número
+            continue;
+        }
+
+        if (num % 2 == 0)
+            evenStack.push(num);
+        else
+            oddStack.push(num);
+
+        previous = num;
+    }
+
+    cout << "Números desempilhados na ordem decrescente:" << endl;
+
+    // Desempilhar e mostrar os números pares
+    while (!evenStack.isEmpty()) {
+        cout << evenStack.pop() << " ";
+    }
+
+    // Desempilhar e mostrar os números ímpares
+    while (!oddStack.isEmpty()) {
+        cout << oddStack.pop() << " ";
+    }
+
+    cout << endl;
+
+    return 0;
+}
